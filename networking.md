@@ -41,7 +41,41 @@ wlp3s0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 ```
 
-netstat
+netstat (-a all, -n no dns resolution, -t tcp ports)
+
+```
+netstat -ant
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State      
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN     
+tcp        0    216 192.168.10.18:22         192.168.10.52:47152      ESTABLISHED
+tcp6       0      0 :::22                   :::*                    LISTEN  
+
+```
+netstat (-a all, -n no dns resolution, -u udp ports)
+```
+netstat -anu
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State      
+udp        0      0 0.0.0.0:68              0.0.0.0:*                          
+udp        0      0 0.0.0.0:161             0.0.0.0:*                          
+udp        0      0 0.0.0.0:1194            0.0.0.0:*                          
+udp        0      0 0.0.0.0:43239           0.0.0.0:*                          
+udp        0      0 0.0.0.0:5353            0.0.0.0:*                          
+udp6       0      0 :::546                  :::*                               
+udp6       0      0 :::5353                 :::*                               
+udp6       0      0 :::42351                :::* 
+```
+netstat (-a all, -n no dns resolution, -t tcp ports, -p process (needs sudo or root) )
+```
+sudo netstat -antp
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      641/sshd            
+tcp        0    196 192.168.10.18:22        192.168.10.52:47152     ESTABLISHED 28098/sshd: pbultee 
+tcp6       0      0 :::22                   :::*                    LISTEN      641/sshd            
+
+```
 
 But these are being replaced with different ones
 
