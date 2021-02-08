@@ -77,9 +77,48 @@ tcp6       0      0 :::22                   :::*                    LISTEN      
 
 ```
 
-But these are being replaced with different ones
+
+But these are being replaced with different ones like `ip addr show` and `ss`
 
 ip addr show
-ss
+```
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: enp0s25: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc fq_codel state DOWN group default qlen 1000
+    link/ether 68:f7:68:02:57:e2 brd ff:ff:ff:ff:ff:ff
+3: wlp3s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether e8:b1:fc:73:19:3c brd ff:ff:ff:ff:ff:ff
+    inet 192.168.10.52/24 brd 192.168.1.255 scope global dynamic noprefixroute wlp3s0
+       valid_lft 3380sec preferred_lft 3380sec
+    inet6 fe80::e222:874e:54ff:e55b/64 scope link noprefixroute 
+       valid_lft forever preferred_lft forever
+26: tun0: <POINTOPOINT,MULTICAST,NOARP,UP,LOWER_UP> mtu 1412 qdisc fq_codel state UNKNOWN group default qlen 500
+    link/none 
+    inet 172.16.20.189/26 brd 172.16.20.191 scope global noprefixroute tun0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::ad9d:c988:ff1:f76d/64 scope link stable-privacy 
+       valid_lft forever preferred_lft forever
+```
+Using ss with the same -a -n -t -u and -p options
+```
+sudo ss -antup
+Netid      State       Recv-Q       Send-Q             Local Address:Port              Peer Address:Port                                                                     
+udp        UNCONN      0            0                        0.0.0.0:68                     0.0.0.0:*           users:(("dhcpcd",pid=626,fd=10))                             
+udp        UNCONN      0            0                        0.0.0.0:161                    0.0.0.0:*           users:(("snmpd",pid=636,fd=8))                               
+udp        UNCONN      0            0                        0.0.0.0:1194                   0.0.0.0:*           users:(("openvpn",pid=627,fd=6))                             
+udp        UNCONN      0            0                        0.0.0.0:43239                  0.0.0.0:*           users:(("avahi-daemon",pid=351,fd=14))                       
+udp        UNCONN      0            0                        0.0.0.0:5353                   0.0.0.0:*           users:(("avahi-daemon",pid=351,fd=12))                       
+udp        UNCONN      0            0                              *:546                          *:*           users:(("dhcpcd",pid=626,fd=15))                             
+udp        UNCONN      0            0                              *:5353                         *:*           users:(("avahi-daemon",pid=351,fd=13))                       
+udp        UNCONN      0            0                              *:42351                        *:*           users:(("avahi-daemon",pid=351,fd=15))                       
+tcp        LISTEN      0            128                      0.0.0.0:22                     0.0.0.0:*           users:(("sshd",pid=641,fd=3))                                
+tcp        ESTAB       0            0                   192.168.10.18:22                192.168.10.52:47152       users:(("sshd",pid=28115,fd=3),("sshd",pid=28098,fd=3))      
+tcp        LISTEN      0            128                         [::]:22                        [::]:*           users:(("sshd",pid=641,fd=4))
+```
+
 
 
