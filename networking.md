@@ -116,7 +116,7 @@ udp        UNCONN      0            0                              *:546        
 udp        UNCONN      0            0                              *:5353                         *:*           users:(("avahi-daemon",pid=351,fd=13))                       
 udp        UNCONN      0            0                              *:42351                        *:*           users:(("avahi-daemon",pid=351,fd=15))                       
 tcp        LISTEN      0            128                      0.0.0.0:22                     0.0.0.0:*           users:(("sshd",pid=641,fd=3))                                
-tcp        ESTAB       0            0                   192.168.10.18:22                192.168.10.52:47152       users:(("sshd",pid=28115,fd=3),("sshd",pid=28098,fd=3))      
+tcp        ESTAB       0            0                   192.168.10.18:22              192.168.10.52:47152       users:(("sshd",pid=28115,fd=3),("sshd",pid=28098,fd=3))      
 tcp        LISTEN      0            128                         [::]:22                        [::]:*           users:(("sshd",pid=641,fd=4))
 ```
 
