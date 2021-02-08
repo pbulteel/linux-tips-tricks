@@ -4,7 +4,7 @@ The typical tools are:
 
 ifconfig 
 
-''' enp0s25: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+``` enp0s25: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
         ether 68:f7:68:22:57:e2  txqueuelen 1000  (Ethernet)
         RX packets 0  bytes 0 (0.0 B)
         RX errors 0  dropped 0  overruns 0  frame 0
@@ -38,7 +38,7 @@ wlp3s0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
         RX errors 0  dropped 126476  overruns 0  frame 0
         TX packets 5010098  bytes 1377667376 (1.3 GB)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-'''
+```
 
 netstat
 
