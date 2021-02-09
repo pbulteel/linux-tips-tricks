@@ -5,3 +5,6 @@ Not everyone is familiar with all the things that can be done on Linux. However,
 
 ## Troubleshooting tools
 [Network troubleshooting tools][networking.md]
+
+
+[networking.md]: /networking.md
