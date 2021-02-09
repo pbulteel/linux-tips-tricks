@@ -10,8 +10,10 @@ git init
 If you're going to do something like the `/etc` directory then you want to use something like etckeeper which keeps metadata like permissions, owner, etc of the files.
 
 ```
-# as root
+# as root on centos
 yum install etckeeper
+# as root on debian based
+apt -y install etckeeper
 cd /etc
 etckeeper init
 ```
