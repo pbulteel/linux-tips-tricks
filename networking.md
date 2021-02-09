@@ -1,6 +1,14 @@
-# Networking tools
+# Network troubleshooting tools
 
 The typical tools are:
+- ifconfig
+- netstat
+- traceroute
+
+but these are being replaced with newever versions 
+- ip
+- ss
+
 
 ifconfig 
 
@@ -120,5 +128,24 @@ tcp        ESTAB       0            0                   192.168.10.18:22        
 tcp        LISTEN      0            128                         [::]:22                        [::]:*           users:(("sshd",pid=641,fd=4))
 ```
 
+using `lsof`
 
+```
+sudo lsof -i -n
+COMMAND    PID        USER   FD   TYPE  DEVICE SIZE/OFF NODE NAME
+avahi-dae  351       avahi   12u  IPv4   14807      0t0  UDP *:mdns 
+avahi-dae  351       avahi   13u  IPv6   14808      0t0  UDP *:mdns 
+avahi-dae  351       avahi   14u  IPv4   14809      0t0  UDP *:43239 
+avahi-dae  351       avahi   15u  IPv6   14810      0t0  UDP *:42351 
+dhcpcd     626        root   10u  IPv4   14857      0t0  UDP *:bootpc 
+dhcpcd     626        root   15u  IPv6   15710      0t0  UDP *:dhcpv6-client 
+openvpn    627      nobody    6u  IPv4   17768      0t0  UDP *:openvpn 
+snmpd      636 Debian-snmp    8u  IPv4   16025      0t0  UDP *:snmp 
+sshd       641        root    3u  IPv4   15949      0t0  TCP *:ssh (LISTEN)
+sshd       641        root    4u  IPv6   15951      0t0  TCP *:ssh (LISTEN)
+sshd      3793        root    3u  IPv4 3217011      0t0  TCP 192.168.10.18:ssh->192.168.10.52:55170 (ESTABLISHED)
+sshd      3799    pbulteel    3u  IPv4 3217011      0t0  TCP 192.168.10.18:ssh->192.168.10.52:55170 (ESTABLISHED)
+
+
+```
 
