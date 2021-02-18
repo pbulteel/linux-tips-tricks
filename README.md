@@ -17,5 +17,6 @@ More in depth information can be found in multiple places. [For example this her
 
 ## Troubleshooting tools
 [Network troubleshooting tools](/networking.md)
+
 [Filesystem utilities and checks](/filesystem-checks.md)
 

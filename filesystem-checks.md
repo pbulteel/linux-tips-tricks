@@ -15,9 +15,9 @@ ls -ld
 du -sh  *
 
 ```
-If you have multiple filesystem types you can exclude (`-x`) them from your output. To see what type they are use the `-T` flag and then exclude that.
+If you have multiple filesystem types you can exclude (`-x`) them from your output. To see what type they are use the `-T` flag and then exclude that. If you have it wrong it won't exclude it (example: nfs vs nfs4)
 ```
-df -h -x squashfs -x nfs 
+df -h -x squashfs -x nfs4 
 ```
 
 ```
