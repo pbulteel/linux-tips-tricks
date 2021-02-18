@@ -1,0 +1,40 @@
+# Filesystem checks
+
+You're familiar with some of the basic commands like `du`, `df`, `mount` but these have several options that can be very helpful.
+
+Good old `ls` even has a few options that are useful but not always used.
+```
+ls -A # same a -a but excludes . and .. 
+ls -lSr # sort by size in reverse order - so the bottom is the largest
+ls -lArt # sort all by last modified date in reverse order so you see latest at the bottom. 
+ls -ld
+```
+
+```
+# to get a summary of sizes of directories in the directory you're in
+du -sh  *
+
+```
+If you have multiple filesystem types you can exclude (`-x`) them from your output. To see what type they are use the `-T` flag and then exclude that.
+```
+df -h -x squashfs -x nfs 
+```
+
+```
+mount -o remount
+```
+
+And who can forget `find`, `lsof` and ...
+
+```
+# find file or directory with case insensitive filename
+find /directory -iname "*filename*"
+# find file (not directory) older than (+) 3 days.
+find /directory -type f -mtime +3
+```
+If you've deleted a file but he application is still writing to it you can still read the data off of the file.
+```
+lsof 
+```
+
+
