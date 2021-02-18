@@ -148,4 +148,13 @@ sshd      3799    pbulteel    3u  IPv4 3217011      0t0  TCP 192.168.10.18:ssh->
 
 
 ```
+If you are in a bind and still want to get some stats without any of those tools, look at /proc/net/dev
 
+```
+cat /proc/net/dev
+Inter-|   Receive                                                |  Transmit
+ face |bytes    packets errs drop fifo frame compressed multicast|bytes    packets errs drop fifo colls carrier compressed
+wlp3s0: 4091551036 4988130    0 58927    0     0          0         0 441568986 1830581    0    0    0     0       0          0
+enp0s25:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
+    lo: 80298580  232744    0    0    0     0          0         0 80298580  232744    0    0    0     0       0          0
+```
