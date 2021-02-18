@@ -7,12 +7,14 @@ Good old `ls` even has a few options that are useful but not always used.
 ls -A # same a -a but excludes . and .. 
 ls -lSr # sort by size in reverse order - so the bottom is the largest
 ls -lArt # sort all by last modified date in reverse order so you see latest at the bottom. 
-ls -ld
-```
+ls -ld directory # use to see the information on the directory instead of its contents
+ls -lb  # use to print any characters in a filename you don't usually see like spaces, tabs, etc" 
 
 ```
+Now back to `du` 
+```
 # to get a summary of sizes of directories in the directory you're in
-du -sh  *
+du -sh  *    
 
 ```
 If you have multiple filesystem types you can exclude (`-x`) them from your output. To see what type they are use the `-T` flag and then exclude that. If you have it wrong it won't exclude it (example: nfs vs nfs4)
