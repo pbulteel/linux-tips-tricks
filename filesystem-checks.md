@@ -4,11 +4,11 @@ You're familiar with some of the basic commands like `du`, `df`, `mount` but the
 
 Good old `ls` even has a few options that are useful but not always used.
 ```
-ls -A # same a -a but excludes . and .. 
-ls -lSr # sort by size in reverse order - so the bottom is the largest
-ls -lArt # sort all by last modified date in reverse order so you see latest at the bottom. 
-ls -ld directory # use to see the information on the directory instead of its contents
-ls -lb  # use to print any characters in a filename you don't usually see like spaces, tabs, etc" 
+ls -A             # same a -a but excludes . and .. from the output
+ls -lSr           # sort by size in reverse order - so the bottom is the largest
+ls -lArt          # sort all by last modified date in reverse order - so you see latest at the bottom. 
+ls -ld directory  # use to see the information on the directory instead of its contents
+ls -lb            # use to print any characters in a filename you don't usually see like spaces, tabs, etc" 
 
 ```
 Now back to `du` 
@@ -29,8 +29,12 @@ mount -o remount
 And who can forget `find`, `lsof` and ...
 
 ```
-# find file or directory with case insensitive filename
-find /directory -iname "*filename*"
+# find file or directory with case insensitive name
+find /directory -iname "*name*"
+# find file with case insensitive filename
+find /directory -type f -iname "*filename*"
+# find directory with case insensitive name
+find /directory -type d -iname "*name*"
 # find file (not directory) older than (+) 3 days.
 find /directory -type f -mtime +3
 ```
