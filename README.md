@@ -13,8 +13,10 @@ Not everyone is familiar with all the things that can be done on Linux. However,
 
 More in depth information can be found in multiple places. [For example this here](https://www.atlassian.com/git/tutorials/what-is-version-control)
 
+[Basic git commands](/git-basics.md)
+
 ## Troubleshooting tools
-[Network troubleshooting tools][networking.md]
+[Network troubleshooting tools](/networking.md)
 
+[Filesystem utilities and checks](/filesystem-checks.md)
 
-[networking.md]: /networking.md
