@@ -111,7 +111,31 @@ ip addr show
     inet6 fe80::ad9d:c988:ff1:f76d/64 scope link stable-privacy 
        valid_lft forever preferred_lft forever
 ```
-Using ss with the same -a -n -t -u and -p options
+You might want to get stats so use `ip -s link`
+```
+ip -s link
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    RX: bytes  packets  errors  dropped overrun mcast   
+    84795127   249123   0       0       0       0       
+    TX: bytes  packets  errors  dropped carrier collsns 
+    84795127   249123   0       0       0       0       
+2: enp0s25: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc fq_codel state DOWN mode DEFAULT group default qlen 1000
+    link/ether 68:f7:28:02:57:e2 brd ff:ff:ff:ff:ff:ff
+    RX: bytes  packets  errors  dropped overrun mcast   
+    0          0        0       0       0       0       
+    TX: bytes  packets  errors  dropped carrier collsns 
+    0          0        0       0       0       0       
+3: wlp3s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DORMANT group default qlen 1000
+    link/ether e8:b1:fc:73:19:3c brd ff:ff:ff:ff:ff:ff
+    RX: bytes  packets  errors  dropped overrun mcast   
+    4903238146 5769516  0       66533   0       0       
+    TX: bytes  packets  errors  dropped carrier collsns 
+    489929462  2067823  0       0       0       0       
+
+```
+
+Using `ss` with the same -a -n -t -u and -p options
 ```
 sudo ss -antup
 Netid      State       Recv-Q       Send-Q             Local Address:Port              Peer Address:Port                                                                     
