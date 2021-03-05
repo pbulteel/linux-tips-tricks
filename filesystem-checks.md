@@ -40,7 +40,7 @@ find /directory -type f -mtime +3
 ```
 If you've deleted a file but he application is still writing to it you can still read the data off of the file.
 ```
-lsof 
+sudo lsof 
 ```
 
 
