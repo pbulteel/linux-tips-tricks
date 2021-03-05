@@ -2,11 +2,13 @@
 
 There are multiple commands that can be used to check processes and their state.
 
+top
 ```
 top
 top -c 
 ```
 
+ps
 ```
 GNU ps has different kind of options which can be
 
