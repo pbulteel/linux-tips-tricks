@@ -28,6 +28,17 @@ yum update
 yum remove package
 ```
 
+## RedHat/CentOS/Rocky
+
+`dnf` is another package manager used in RH and derivatives that is newer and becoming the norm. 
+
+```
+dnf install package
+dnf remove package
+dnf update
+dnf upgrade
+```
+
 ## SUSE
 
 SUSE uses rpms, but to install you usually use `zypper`
@@ -36,7 +47,6 @@ SUSE uses rpms, but to install you usually use `zypper`
 zypper in package
 zypper up package
 zypper up
-
 ```
 
 Here are a couple of cheat sheets. [Sheet 1](https://en.opensuse.org/images/1/17/Zypper-cheat-sheet-1.pdf) [Sheet 2](https://en.opensuse.org/images/3/30/Zypper-cheat-sheet-2.pdf)
@@ -54,3 +64,7 @@ apt update                                                  # to update the data
 apt-get upgrade                                             # to upgrade the packages on the system
 apt upgrade                                                 # to upgrade the packages on the system
 ```
+
+## Others
+
+There are other distributions, like Arch (and derivatives) which use AUR and Pacman, Gentoo uses portage, and then there's pkg in Alpine (which is used in docker containers), etc... Just too many. I've only included RH/SUSE/Debian as these are the most used distributions in commercial and production settings.  
