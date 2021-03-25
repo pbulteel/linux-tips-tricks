@@ -30,7 +30,16 @@ yum remove package
 
 ## SUSE
 
+SUSE uses rpms, but to install you usually use `zypper`
+
 ```
+zypper in package
+zypper up package
+zypper up
+
+```
+
+Here are a couple of cheat sheets. [Sheet 1](https://en.opensuse.org/images/1/17/Zypper-cheat-sheet-1.pdf) [Sheet 2](https://en.opensuse.org/images/3/30/Zypper-cheat-sheet-2.pdf)
 
 ## Debian and Ubuntu derivatives
 
