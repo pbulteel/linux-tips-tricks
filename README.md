@@ -22,3 +22,5 @@ More in depth information can be found in multiple places. [For example this her
 
 [Filesystem utilities and checks](/filesystem-checks.md)
 
+## Package management tools
+[Package management](/packagemanagement.md)
