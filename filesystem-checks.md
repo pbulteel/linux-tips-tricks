@@ -11,23 +11,23 @@ ls -ld directory  # use to see the information on the directory instead of its c
 ls -lb            # use to print any characters in a filename you don't usually see like spaces, tabs, etc" 
 
 ```
-`du` 
+With `du` 
 ```
 # to get a summary of sizes of directories in the directory you're in
 du -sh  *    
 du -h -d 1 /dir   # similar to above, does a "depth" of 1 giving totals for the directories under /dir
 
 ```
-If you have multiple filesystem types you can exclude (`-x`) them from your output. To see what type they are use the `-T` flag and then exclude that. If you have it wrong it won't exclude it (example: nfs vs nfs4)
+However, if you have multiple filesystem types they can show a lot of data, but you can exclude (`-x`) them from your output. To see what type they are use the `-T` flag and then exclude that. If you have it wrong it won't exclude it (example: nfs vs nfs4)
 ```
 df -h -x squashfs -x nfs4 
 ```
-
+And if you have a filesystem you want to remount
 ```
 mount -o remount
 ```
 
-And who can forget `find`, `lsof` and ...
+And who can forget `find`, `lsof` and others...
 
 ```
 # find file or directory with case insensitive name
@@ -41,7 +41,7 @@ find /directory -type f -mtime +3
 ```
 If you've deleted a file but he application is still writing to it you can still read the data off of the file.
 ```
-sudo lsof 
+lsof 
 lsof +D directory     # this tells you what applications are using files in that directory
 ```
 
