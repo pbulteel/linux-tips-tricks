@@ -1,12 +1,12 @@
-# Package Management / Software 
+# Package Management / Software
 
 There are various package managers which are different between distributions.
 
 ## RedHat/CentOS/Rocky/SUSE
 
-These use rpm (Red-Hat Package Manager). 
+These use rpm (Red-Hat Package Manager).
 
-```
+``` bash
 rpm -i package                                              # to install software
 rpm -q package                                              # to see if the software package is installed
 rpm -qa                                                     # to list ALL software installed
@@ -20,19 +20,17 @@ However, RPM is notorious for having dependency issues when installing via `rpm`
 
 ## RedHat/CentOS/Rocky
 
-These use `yum` to manage the software packages. 
+These use `yum` to manage the software packages.
 
-```
+``` bash
 yum install package
 yum update
 yum remove package
 ```
 
-## RedHat/CentOS/Rocky
+`dnf` is another package manager used in RH and derivatives that is newer and becoming the norm.
 
-`dnf` is another package manager used in RH and derivatives that is newer and becoming the norm. 
-
-```
+``` bash
 dnf install package
 dnf remove package
 dnf update
@@ -43,19 +41,19 @@ dnf upgrade
 
 SUSE uses rpms, but to install you usually use `zypper`
 
-```
+``` bash
 zypper in package
 zypper up package
 zypper up
 ```
 
-Here are a couple of cheat sheets. [Sheet 1](https://en.opensuse.org/images/1/17/Zypper-cheat-sheet-1.pdf) [Sheet 2](https://en.opensuse.org/images/3/30/Zypper-cheat-sheet-2.pdf)
+Here are a couple of cheat sheets. [Cheat Sheet 1](https://en.opensuse.org/images/1/17/Zypper-cheat-sheet-1.pdf) [Cheat Sheet 2](https://en.opensuse.org/images/3/30/Zypper-cheat-sheet-2.pdf)
 
 ## Debian and Ubuntu derivatives
 
 Debian and derivatives, like Ubuntu, Linux Mint, etc all use `apt-get`, and now `apt` to install 'deb' packages. This makes it easier than using `dpkg` which is still the more powerful of the 3 debian package installers.
 
-```
+``` bash
 dpkg -i package                                             # to install software 
 apt-get install package                                     # to install software 
 apt install package                                         # to install software 
