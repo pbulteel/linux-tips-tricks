@@ -51,3 +51,5 @@ If you've deleted a file but he application is still writing to it you can still
 lsof 
 lsof +D directory     # this tells you what applications are using files in that directory
 ```
+
+Of course, if you now know that there are space issues and you need to expand disks you can look at [filesystem expansion](/filesystem-expansion.md) or maybe you need to move data across to another disk.
