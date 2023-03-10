@@ -51,3 +51,28 @@ If you've deleted a file but he application is still writing to it you can still
 lsof 
 lsof +D directory     # this tells you what applications are using files in that directory
 ```
+
+Example of expanding swap file on a RHEL system by adding another disk.
+
+``` bash
+# Disable swap
+swapoff -v /dev/dm-1
+for disk in $(ls -1 /sys/class/scsi_device/); do
+     echo 1 > /sys/class/scsi_device/${disk}/device/rescan;
+done
+for host in $(ls -1 /sys/class/scsi_host/); do
+     echo "- - -" > /sys/class/scsi_host/${host}/scan; 
+done
+# use fdisk to partition the drive - (p)rimary partition, (t)ype 8e (Linux LVM) and (w)rite
+fdisk  /dev/sdb
+# extend the volume group to add 2nd disk
+vgextend rhel /dev/sdb1
+pvscan
+# resize the swap volume
+lvresize  -L 8G /dev/mapper/rhel-swap
+# re-make it into a swap type
+mkswap /dev/mapper/rhel-swap 
+# re-enable swap 
+swapon -v /dev/dm-1
+swapon -s
+```
