@@ -1,18 +1,19 @@
 # Network troubleshooting tools
 
 The typical tools are:
+
 - ifconfig
 - netstat
 - traceroute
 
-but these are being replaced with newever versions 
+but these are being replaced with newever versions
+
 - ip
 - ss
 
+ifconfig
 
-ifconfig 
-
-``` 
+``` bash
 enp0s25: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
         ether 68:f7:68:22:57:e2  txqueuelen 1000  (Ethernet)
         RX packets 0  bytes 0 (0.0 B)
@@ -51,7 +52,7 @@ wlp3s0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
 
 netstat (-a all, -n no dns resolution, -t tcp ports)
 
-```
+``` bash
 netstat -ant
 Active Internet connections (servers and established)
 Proto Recv-Q Send-Q Local Address           Foreign Address         State      
@@ -60,8 +61,10 @@ tcp        0    216 192.168.10.18:22        192.168.10.52:47152     ESTABLISHED
 tcp6       0      0 :::22                   :::*                    LISTEN  
 
 ```
+
 netstat (-a all, -n no dns resolution, -u udp ports)
-```
+
+``` bash
 netstat -anu
 Active Internet connections (servers and established)
 Proto Recv-Q Send-Q Local Address           Foreign Address         State      
@@ -74,8 +77,10 @@ udp6       0      0 :::546                  :::*
 udp6       0      0 :::5353                 :::*                               
 udp6       0      0 :::42351                :::* 
 ```
+
 netstat (-a all, -n no dns resolution, -t tcp ports, -p process (needs sudo or root) )
-```
+
+``` bash
 sudo netstat -antp
 Active Internet connections (servers and established)
 Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
@@ -85,11 +90,11 @@ tcp6       0      0 :::22                   :::*                    LISTEN      
 
 ```
 
-
 But these are being replaced with different ones like `ip addr show` and `ss`
 
 ip addr show
-```
+
+``` bash
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
@@ -111,8 +116,10 @@ ip addr show
     inet6 fe80::ad9d:c988:ff1:f76d/64 scope link stable-privacy 
        valid_lft forever preferred_lft forever
 ```
+
 You might want to get stats so use `ip -s link`
-```
+
+``` bash
 ip -s link
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -136,7 +143,8 @@ ip -s link
 ```
 
 Using `ss` with the same -a -n -t -u and -p options
-```
+
+``` bash
 sudo ss -antup
 Netid      State       Recv-Q       Send-Q             Local Address:Port              Peer Address:Port                                                                     
 udp        UNCONN      0            0                        0.0.0.0:68                     0.0.0.0:*           users:(("dhcpcd",pid=626,fd=10))                             
@@ -154,7 +162,7 @@ tcp        LISTEN      0            128                         [::]:22         
 
 using `lsof`
 
-```
+``` bash
 sudo lsof -i -n
 COMMAND    PID        USER   FD   TYPE  DEVICE SIZE/OFF NODE NAME
 avahi-dae  351       avahi   12u  IPv4   14807      0t0  UDP *:mdns 
@@ -169,16 +177,51 @@ sshd       641        root    3u  IPv4   15949      0t0  TCP *:ssh (LISTEN)
 sshd       641        root    4u  IPv6   15951      0t0  TCP *:ssh (LISTEN)
 sshd      3793        root    3u  IPv4 3217011      0t0  TCP 192.168.10.18:ssh->192.168.10.52:55170 (ESTABLISHED)
 sshd      3799    pbulteel    3u  IPv4 3217011      0t0  TCP 192.168.10.18:ssh->192.168.10.52:55170 (ESTABLISHED)
-
-
 ```
+
 If you are in a bind and still want to get some stats without any of those tools, look at /proc/net/dev
 
-```
+``` bash
 cat /proc/net/dev
 Inter-|   Receive                                                |  Transmit
  face |bytes    packets errs drop fifo frame compressed multicast|bytes    packets errs drop fifo colls carrier compressed
 wlp3s0: 4091551036 4988130    0 58927    0     0          0         0 441568986 1830581    0    0    0     0       0          0
 enp0s25:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
     lo: 80298580  232744    0    0    0     0          0         0 80298580  232744    0    0    0     0       0          0
+```
+
+## DNS caching
+
+Sometimes you are going to a website or server whose ip address AND DNS entry has changed, but your applications still go to the wrong IP. This would be due to DNS Caching. 
+
+Example
+
+``` bash
+ping server.example.com
+PING server.example.com(192.168.1.10)
+^C
+--- server.example.com ping statistics ---
+3 packets transmitted, 0 received, 100% packet loss, time 2032ms
+
+dig @ns.example.com server.example.com
+<snip>
+server.example.com.     300     IN      A 192.168.1.20
+<snip>
+```
+
+As you can see the server's IP and DNS entry has changed but ping is still trying the old address. There are multiple possible ways to clear out the cache depending on what you are running.
+
+``` bash
+sudo /etc/init.d/nscd restart
+sudo /etc/init.d/dnsmasq restart
+sudo /etc/init.d/named restart
+sudo rndc restart
+sudo rndc exec
+sudo systemd-resolve --flush-cache
+sudo resolvectl flush-caches
+
+ping server.example.com
+PING server.example.com(192.168.1.20)
+64 bytes from 192.168.1.20: icmp_seq=1 ttl=64 time=0.420 ms
+<snip>
 ```
