@@ -53,3 +53,4 @@ lsof +D directory     # this tells you what applications are using files in that
 ```
 
 Of course, if you now know that there are space issues and you need to expand disks you can look at [filesystem expansion](/filesystem-expansion.md) or maybe you need to move data across to another disk.
+
