@@ -11,6 +11,8 @@ but these are being replaced with newever versions
 - ip
 - ss
 
+and you can use other tools like telnet or redirects into /dev (more advanced, but pretty useful)
+
 ifconfig
 
 ``` bash
@@ -224,4 +226,111 @@ ping server.example.com
 PING server.example.com(192.168.1.20)
 64 bytes from 192.168.1.20: icmp_seq=1 ttl=64 time=0.420 ms
 <snip>
+```
+
+== Port testing
+
+If you're testing if a port is open, a common tool to use is `telnet`, however, this tool might not always be available.
+
+```bash
+telnet 127.0.0.1 22
+Trying 127.0.0.1...
+Connected to 127.0.0.1.
+Escape character is '^]'.
+SSH-2.0-OpenSSH_8.9p1 Ubuntu-3ubuntu0.7
+^C
+Connection closed by foreign host.
+```
+
+But if telnet isn't available, you can use the `/dev` filesystem to get to it.
+
+If you notice below, that path doesn't actually exist. Additionally, you can get to a system via FQDN or IP.
+
+```bash
+ls /dev/tcp/
+ls: cannot access '/dev/tcp/': No such file or directory
+exec 3<>/dev/tcp/127.0.0.1/22
+exec 3<>/dev/tcp/127.0.0.1/23
+bash: connect: Connection refused
+bash: /dev/tcp/127.0.0.1/23: Connection refused
+exec 3<>/dev/tcp/www.google.com/80
+```
+
+## openssl s_client
+
+You can use `openssl` to test a connection to a TLS endpoint and even see the certificate.
+
+```bash
+openssl s_client -connect www.google.com:443 -servername www.google.com -status
+CONNECTED(00000004)
+depth=2 C = US, O = Google Trust Services LLC, CN = GTS Root R1
+verify return:1
+depth=1 C = US, O = Google Trust Services, CN = WR2
+verify return:1
+depth=0 CN = www.google.com
+verify return:1
+OCSP response: no response sent
+---
+Certificate chain
+ 0 s:CN = www.google.com
+   i:C = US, O = Google Trust Services, CN = WR2
+   a:PKEY: id-ecPublicKey, 256 (bit); sigalg: RSA-SHA256
+   v:NotBefore: Jun  3 07:35:32 2024 GMT; NotAfter: Aug 26 07:35:31 2024 GMT
+ 1 s:C = US, O = Google Trust Services, CN = WR2
+   i:C = US, O = Google Trust Services LLC, CN = GTS Root R1
+   a:PKEY: rsaEncryption, 2048 (bit); sigalg: RSA-SHA256
+   v:NotBefore: Dec 13 09:00:00 2023 GMT; NotAfter: Feb 20 14:00:00 2029 GMT
+ 2 s:C = US, O = Google Trust Services LLC, CN = GTS Root R1
+   i:C = BE, O = GlobalSign nv-sa, OU = Root CA, CN = GlobalSign Root CA
+   a:PKEY: rsaEncryption, 4096 (bit); sigalg: RSA-SHA256
+   v:NotBefore: Jun 19 00:00:42 2020 GMT; NotAfter: Jan 28 00:00:42 2028 GMT
+---
+Server certificate
+-----BEGIN CERTIFICATE-----
+MIIEVjCCAz6gAwIBAgIQSXxNwQWIT5YSZuWFnlQXRjANBgkqhkiG9w0BAQsFADA7
+MQswCQYDVQQGEwJVUzEeMBwGA1UEChMVR29vZ2xlIFRydXN0IFNlcnZpY2VzMQww
+CgYDVQQDEwNXUjIwHhcNMjQwNjAzMDczNTMyWhcNMjQwODI2MDczNTMxWjAZMRcw
+FQYDVQQDEw53d3cuZ29vZ2xlLmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IA
+BDTR6QX1jy6WONOixzdIu+rpEB0vcf+UwqCTbvCddyDYlZQ5QJ2NJfUhB4NMRHW8
+Waqb9Z0/Fx62R/zWvLXadsujggJBMIICPTAOBgNVHQ8BAf8EBAMCB4AwEwYDVR0l
+BAwwCgYIKwYBBQUHAwEwDAYDVR0TAQH/BAIwADAdBgNVHQ4EFgQU36O8GACznum9
+YV13sSejVDUNVEowHwYDVR0jBBgwFoAU3hse7XkV1D43JMMhu+w0OW1CsjAwWAYI
+KwYBBQUHAQEETDBKMCEGCCsGAQUFBzABhhVodHRwOi8vby5wa2kuZ29vZy93cjIw
+JQYIKwYBBQUHMAKGGWh0dHA6Ly9pLnBraS5nb29nL3dyMi5jcnQwGQYDVR0RBBIw
+EIIOd3d3Lmdvb2dsZS5jb20wEwYDVR0gBAwwCjAIBgZngQwBAgEwNgYDVR0fBC8w
+LTAroCmgJ4YlaHR0cDovL2MucGtpLmdvb2cvd3IyL29RNm55cjhGMG0wLmNybDCC
+AQQGCisGAQQB1nkCBAIEgfUEgfIA8AB2AO7N0GTV2xrOxVy3nbTNE6Iyh0Z8vOze
+w1FIWUZxH7WbAAABj909TqUAAAQDAEcwRQIgHJS2fR8YH/2fxkHnTVnoljqN1YSx
+UteYb3uIfPCTU4kCIQDPc4mPepJkx2EtSDvz98SMIi1d2RGqJdoOwoHbcTTUVAB2
+AD8XS0/XIkdYlB1lHIS+DRLtkDd/H4Vq68G/KIXs+GRuAAABj909TrsAAAQDAEcw
+RQIgE7LU0q96nQ7j6PnD1950ptkxsxSVz5R9Cc/BMyocBhoCIQCQd0I5sACFezN2
+VhXIM7yNIy/76nDzLl04YUflxb1JmzANBgkqhkiG9w0BAQsFAAOCAQEAYGTkcGY9
+iTp1GrXkjeECwQxJPj/yxKEUDr/Yg/ltbqgBePF5gT49WyLEo7pnaB2FqkNtu58x
+QO+qsUgFJLJxU/oEK133sJMY32mbgp0S6XJGrIez4PyLh62yhG/f75xXGn8VL3zV
+kQaElcaYvzG750goDQyVMkorTIrTxTCWmRfFlHzGCCh5T3KhC7AfCuL169+KKb1C
+r+Vty3PwuhmgoPw9oZoYRZnmOUnYXX+YDbW+qmrxSieBbuHEH6y6AZV1IQmgaG2T
+0d7nPg0Ed+yMko24fNp+aQEsXfqu6qmVA9ahfXA1BoCnVEy6RocyBmUWgQYf4nl5
+vhuLQy1D3JRD9Q==
+-----END CERTIFICATE-----
+subject=CN = www.google.com
+issuer=C = US, O = Google Trust Services, CN = WR2
+---
+No client certificate CA names sent
+Peer signing digest: SHA256
+Peer signature type: ECDSA
+Server Temp Key: X25519, 253 bits
+---
+SSL handshake has read 4106 bytes and written 405 bytes
+Verification: OK
+---
+New, TLSv1.3, Cipher is TLS_AES_256_GCM_SHA384
+Server public key is 256 bit
+Secure Renegotiation IS NOT supported
+Compression: NONE
+Expansion: NONE
+No ALPN negotiated
+Early data was not sent
+Verify return code: 0 (ok)
+---
+
 ```

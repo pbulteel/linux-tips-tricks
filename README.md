@@ -12,7 +12,7 @@ Not everyone is familiar with all the things that can be done on Linux. However,
 
 [VIM cheat sheet](https://vim.rtorr.com/)
 
-[Zypper 1](https://en.opensuse.org/images/1/17/Zypper-cheat-sheet-1.pdf) 
+[Zypper 1](https://en.opensuse.org/images/1/17/Zypper-cheat-sheet-1.pdf)
 [Zypper 2](https://en.opensuse.org/images/3/30/Zypper-cheat-sheet-2.pdf)
 
 ## Quick wins
